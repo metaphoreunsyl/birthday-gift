@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toy Box Birthday Gift</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#18aeea;
+  --deep:#0b4f9a;
+  --yellow:#ffd900;
+  --red:#df1e2b;
+  --cream:#fff2cf;
+  --ink:#14375d;
+  --soft:#ffffffcc;
+  --shadow:0 18px 36px rgba(18,34,62,.25);
+}
+html,body{
+  width:100%;height:100%;
+  overflow:hidden;
+  font-family:"Fredoka",sans-serif;
+  background:#74d8ff;
+  color:var(--ink);
+}
+button{font-family:inherit;border:0;cursor:pointer;background:none;-webkit-tap-highlight-color:transparent}
+.screen{position:fixed;inset:0;display:none;overflow:hidden}
+.screen.active{display:block}
+
+/* OPENING */
+#opening{
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,255,255,.9) 0 5%,transparent 5.5%),
+    radial-gradient(circle at 82% 20%,rgba(255,255,255,.75) 0 6%,transparent 6.5%),
+    linear-gradient(180deg,#8ee5ff 0%,#51beef 64%,#188ed3 100%);
+}
+.cloud{
+  position:absolute;width:150px;height:54px;border-radius:999px;background:#fff;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.08));opacity:.9;
+}
+.cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud:before{width:70px;height:70px;left:22px;bottom:18px}
+.cloud:after{width:88px;height:88px;right:16px;bottom:8px}
+.cl1{left:8%;top:10%;animation:cloud 7s ease-in-out infinite}
+.cl2{right:7%;top:23%;transform:scale(.72);animation:cloud 8s ease-in-out infinite reverse}
+.cl3{left:43%;top:8%;transform:scale(.55);animation:cloud 9s ease-in-out infinite}
+@keyframes cloud{50%{translate:24px -7px}}
+
+.checker-floor{
+  position:absolute;left:-8%;right:-8%;bottom:-7%;height:31%;
+  background-image:url("checker.png");
+  background-color:var(--yellow);
+  background-size:145px 145px;
+  border-top:9px solid #bd1724;
+  transform:skewY(-2deg);
+}
+.checker-floor:after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(195,17,28,.9) 0 10px,transparent 10px 50px),
+    linear-gradient(0deg,rgba(195,17,28,.9) 0 10px,transparent 10px 50px);
+  background-size:56px 56px;
+  opacity:.75;
+}
+
+.opening-stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:3}
+.opening-toy{position:absolute;object-fit:contain;filter:drop-shadow(0 18px 16px rgba(0,0,0,.24));z-index:4}
+.opening-toy.ball{width:92px;left:9%;bottom:23%;animation:bounce 2.4s ease-in-out infinite}
+.opening-toy.forky{width:105px;right:10%;bottom:22%;animation:wobble 2.8s ease-in-out infinite}
+.opening-toy.rocket{width:130px;right:18%;top:17%;animation:rocketFloat 3s ease-in-out infinite}
+@keyframes bounce{50%{translate:0 -23px;rotate:16deg}}
+@keyframes wobble{0%,100%{rotate:-4deg}50%{rotate:6deg}}
+@keyframes rocketFloat{0%,100%{translate:0 0;rotate:-18deg}50%{translate:0 -17px;rotate:-7deg}}
+
+.gift-box{
+  position:relative;width:min(76vw,360px);height:280px;z-index:5;
+  animation:floatGift 3s ease-in-out infinite;
+}
+@keyframes floatGift{50%{translate:0 -12px}}
+.lid{
+  position:absolute;top:38px;left:-18px;right:-18px;height:76px;
+  background:#20aeea;border:8px solid #0876b6;border-radius:24px;
+  z-index:6;box-shadow:0 12px 0 rgba(0,0,0,.08);
+  transform-origin:left center;
+}
+.box-body{
+  position:absolute;bottom:0;width:100%;height:194px;border-radius:28px;
+  background:var(--yellow);border:8px solid #bd1825;box-shadow:var(--shadow);overflow:hidden;
+}
+.box-body:before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(190,18,27,.62) 0 9px,transparent 9px 48px),
+    linear-gradient(0deg,rgba(190,18,27,.62) 0 9px,transparent 9px 48px);
+  background-size:54px 54px;
+}
+.ribbon-v{
+  position:absolute;top:22px;left:50%;width:52px;height:244px;translate:-50% 0;
+  background:#df202b;border-inline:6px solid #b91521;border-radius:18px;z-index:8;
+}
+.ribbon-h{
+  position:absolute;top:70px;left:25px;right:25px;height:42px;
+  background:#df202b;border-radius:18px;z-index:9;
+}
+.label{
+  position:absolute;left:28px;right:28px;bottom:28px;z-index:10;
+  background:white;border:3px dashed var(--deep);border-radius:18px;padding:12px;
+  transform:rotate(-1deg);text-align:center;
+}
+.label span{display:block;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;color:var(--red)}
+.label b{font-size:30px;color:var(--deep)}
+.gift-box.open .lid{animation:lidOpen .75s cubic-bezier(.18,1.5,.35,1) forwards}
+.gift-box.open .ribbon-h{animation:popAway .45s ease forwards}
+@keyframes lidOpen{to{transform:translate(-28px,-90px) rotate(-16deg)}}
+@keyframes popAway{to{opacity:0;scale:.4 1}}
+
+.opening-title{
+  position:absolute;top:69%;
+  font-size:clamp(36px,9vw,68px);color:#fff;line-height:.95;
+  text-shadow:4px 4px 0 var(--deep),7px 7px 0 var(--red);
+}
+.opening-sub{
+  position:absolute;top:81%;background:rgba(255,255,255,.76);
+  padding:8px 18px;border-radius:999px;border:2px solid #fff;color:var(--ink);
+}
+
+/* MAIN */
+#main{background:#72d9ff}
+.room-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,#86e3ff 0%,#49bdf0 70%,#1492d4 100%);
+}
+.floor{
+  position:absolute;left:-9%;right:-9%;bottom:-9%;height:35%;
+  background-image:url("checker.png");background-size:145px 145px;background-color:var(--yellow);
+  border-top:9px solid #bd1825;transform:skewY(-2deg);opacity:.97;
+}
+.floor:after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(190,18,27,.68) 0 9px,transparent 9px 48px),
+    linear-gradient(0deg,rgba(190,18,27,.68) 0 9px,transparent 9px 48px);
+  background-size:55px 55px;opacity:.5;
+}
+.wall-cloud{position:absolute;width:190px;height:58px;border-radius:999px;background:white;opacity:.64}
+.wall-cloud:before,.wall-cloud:after{content:"";position:absolute;border-radius:50%;background:white}
+.wall-cloud:before{width:80px;height:80px;left:25px;bottom:17px}
+.wall-cloud:after{width:96px;height:96px;right:15px;bottom:5px}
+.wc1{left:-28px;top:10%;transform:scale(.72);animation:cloud 8s infinite}
+.wc2{right:-40px;top:25%;transform:scale(.6);animation:cloud 9s infinite reverse}
+
+.hero{position:relative;z-index:4;width:min(92vw,780px);margin:0 auto;padding-top:31px;text-align:center}
+.tag{
+  display:inline-block;padding:7px 17px;border-radius:999px;background:#fff6da;
+  border:3px solid var(--red);color:var(--red);font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;box-shadow:0 8px 0 rgba(0,0,0,.08);
+}
+.hero h1{
+  margin-top:14px;font-size:clamp(38px,8vw,70px);color:white;line-height:.95;
+  text-shadow:4px 4px 0 var(--deep),7px 7px 0 var(--red);
+}
+.desc{
+  width:min(92vw,620px);margin:15px auto 0;background:rgba(255,255,255,.62);
+  border:2px solid rgba(255,255,255,.85);border-radius:22px;padding:12px 16px;
+  font-size:17px;line-height:1.48;backdrop-filter:blur(8px);
+}
+
+.toy-table{position:relative;z-index:5;width:min(94vw,850px);height:338px;margin:15px auto 0}
+.main-card{
+  position:absolute;left:50%;top:50%;translate:-50% -50%;
+  width:min(84vw,430px);background:var(--cream);border:5px solid var(--ink);
+  border-radius:30px;padding:28px 22px;text-align:center;
+  box-shadow:0 16px 0 #0b5a9a,0 28px 42px rgba(0,0,0,.22);
+}
+.badge{
+  display:inline-block;background:var(--yellow);border:3px solid var(--red);color:var(--red);
+  border-radius:999px;padding:5px 15px;text-transform:uppercase;letter-spacing:1px;font-size:12px;
+}
+.main-card h2{margin-top:9px;font-size:38px;color:var(--red);text-shadow:2px 2px 0 #fff}
+.main-card p{margin:8px auto 0;font-size:16px;line-height:1.45;max-width:320px}
+.toy{position:absolute;z-index:7;transition:.25s ease}
+.toy:hover{transform:translateY(-8px) scale(1.04)}
+.toy img,.toy span{display:block;object-fit:contain;filter:drop-shadow(0 16px 14px rgba(0,0,0,.25))}
+.toy span{font-size:76px}
+.toy-cowboy{left:3%;bottom:20px}.toy-cowboy img{width:122px}
+.toy-horse{right:2%;bottom:22px}.toy-horse img{width:132px}
+.toy-doll{left:16%;top:0}.toy-doll img{width:106px}
+.toy-rocket{right:16%;top:-12px}.toy-rocket img{width:132px}
+.toy-forky{left:50%;bottom:-8px;translate:-50% 0}.toy-forky img{width:82px}
+
+.menu-row{
+  position:relative;z-index:6;width:min(92vw,850px);margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+}
+.menu-card{
+  min-height:92px;border-radius:23px;background:#fff7df;border:4px solid var(--ink);
+  box-shadow:0 8px 0 #0b5a9a;display:flex;align-items:center;gap:10px;
+  padding:12px;text-align:left;color:var(--ink);transition:.2s ease;
+}
+.menu-card:hover{translate:0 -5px;box-shadow:0 13px 0 #0b5a9a}
+.menu-card span{font-size:32px}.menu-card b{display:block;font-size:15px}.menu-card small{font-size:11px;opacity:.72}
+
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:99;display:none}
+.modal.active{display:block}
+.modal-bg{position:absolute;inset:0;background:rgba(20,30,48,.58);backdrop-filter:blur(6px)}
+.popup{
+  position:absolute;left:50%;top:50%;width:min(92vw,760px);max-height:86svh;
+  translate:-50% -50%;overflow:hidden;border-radius:34px;background:var(--cream);
+  border:6px solid var(--ink);box-shadow:0 20px 0 #0b5a9a,0 35px 60px rgba(0,0,0,.36);
+  animation:popupIn .35s cubic-bezier(.18,1.25,.4,1) both;
+}
+@keyframes popupIn{from{opacity:0;scale:.92}to{opacity:1;scale:1}}
+.back-btn{
+  position:absolute;top:16px;left:16px;z-index:5;height:42px;padding:0 18px;
+  border-radius:999px;background:var(--red);color:white;box-shadow:0 5px 0 #9d1017;
+  text-transform:uppercase;
+}
+.popup-inner{padding:76px 34px 34px;max-height:86svh;overflow-y:auto;scrollbar-width:none}
+.popup-inner::-webkit-scrollbar{display:none}
+.popup-title{text-align:center;color:var(--red);font-size:42px;text-shadow:2px 2px 0 white;margin-bottom:10px}
+.popup-sub{text-align:center;color:var(--ink);font-size:17px;line-height:1.55;width:min(100%,560px);margin:0 auto 22px}
+.wish-paper{
+  background:white;border:4px dashed var(--blue);border-radius:28px;padding:26px;color:#1b3658;
+  font-family:"Patrick Hand",cursive;font-size:25px;line-height:1.55;transform:rotate(-1deg);
+}
+.mission-list{display:grid;gap:12px}
+.mission-item{display:flex;align-items:center;gap:12px;background:white;border:3px solid var(--ink);border-radius:18px;padding:14px;font-size:17px}
+.check{width:28px;height:28px;border-radius:50%;background:#4ebc5d;color:white;display:grid;place-items:center;flex:0 0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.photo-slot{
+  min-height:130px;border-radius:22px;border:4px solid var(--ink);
+  background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.12)),var(--yellow);
+  display:grid;place-items:center;text-align:center;padding:16px;font-weight:700;
+}
+.rocket-scene{
+  position:relative;height:310px;border-radius:28px;
+  background:radial-gradient(circle at 50% 28%,white 0 7px,transparent 8px),
+             radial-gradient(circle at 30% 40%,white 0 5px,transparent 6px),
+             linear-gradient(180deg,#173c63,#0b1d34);
+  overflow:hidden;border:4px solid var(--ink);
+}
+.launch-rocket{position:absolute;left:50%;bottom:20px;width:145px;translate:-50% 0;animation:launch 3.4s ease-in-out infinite}
+.launch-rocket img{width:100%;filter:drop-shadow(0 15px 16px rgba(0,0,0,.35))}
+@keyframes launch{50%{translate:-50% -92px;rotate:6deg}}
+.fire{
+  position:absolute;left:50%;bottom:0;width:80px;height:110px;translate:-50% 0;
+  background:radial-gradient(ellipse at top,#fff 0 10%,#ffd900 11% 36%,#e31925 37% 70%,transparent 71%);
+  animation:firePulse .18s infinite alternate;
+}
+@keyframes firePulse{to{height:126px;opacity:.82}}
+.music-box{display:flex;align-items:center;gap:18px;background:white;border:4px solid var(--ink);border-radius:28px;padding:22px}
+.record{
+  width:96px;height:96px;border-radius:50%;
+  background:radial-gradient(circle,#ffd900 0 9px,#111 10px 33px,#e31925 34px 48px);
+  animation:spin 3s linear infinite;
+}
+@keyframes spin{to{rotate:360deg}}
+.music-box audio{width:100%;margin-top:10px}
+.game-area{position:relative;height:300px;border-radius:28px;background:#1b3658;overflow:hidden;border:4px solid var(--ink)}
+.game-info{background:white;color:var(--ink);display:inline-block;padding:8px 16px;border-radius:999px;border:3px solid var(--red);margin-bottom:12px}
+.catch-star{position:absolute;font-size:38px;background:transparent;animation:starDrop 2.4s linear forwards}
+@keyframes starDrop{from{top:-50px}to{top:330px}}
+.confetti{position:fixed;top:-20px;z-index:200;font-size:20px;animation:fall 2.8s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+
+@media(max-width:720px){
+  .hero{padding-top:26px}
+  .hero h1{font-size:42px;text-shadow:3px 3px 0 var(--deep),5px 5px 0 var(--red)}
+  .desc{font-size:14px;padding:10px 12px}
+  .toy-table{height:350px}
+  .main-card{width:78vw;padding:22px 18px}.main-card h2{font-size:29px}
+  .toy-cowboy{left:-4%;bottom:28px}.toy-cowboy img{width:92px}
+  .toy-horse{right:-5%;bottom:30px}.toy-horse img{width:98px}
+  .toy-doll{left:8%;top:8px}.toy-doll img{width:82px}
+  .toy-rocket{right:7%;top:6px}.toy-rocket img{width:98px}
+  .toy-forky img{width:70px}
+  .menu-row{grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .menu-card{min-height:78px;padding:10px;border-radius:18px}
+  .popup{width:92vw;border-radius:28px}
+  .popup-inner{padding:72px 18px 28px}
+  .popup-title{font-size:32px}
+  .wish-paper{font-size:22px;padding:20px}
+  .gallery-grid{grid-template-columns:1fr}
+}
+
+/* === FINAL PATCH: MISSION CHECKLIST + CAKE CONFETTI === */
+.mission-item{
+  cursor:pointer;
+  user-select:none;
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.mission-item:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 0 rgba(11,90,154,.22);
+}
+.mission-item .check{
+  background:#fff !important;
+  color:transparent !important;
+  border:3px solid #4ebc5d;
+  box-shadow:inset 0 0 0 3px rgba(78,188,93,.12);
+  transition:.18s ease;
+}
+.mission-item.done{
+  background:#f3fff1 !important;
+  border-color:#2f9f47 !important;
+}
+.mission-item.done .check{
+  background:#4ebc5d !important;
+  color:white !important;
+  transform:scale(1.08);
+}
+.mission-item.done .mission-text{
+  text-decoration:line-through;
+  text-decoration-thickness:2px;
+  text-decoration-color:rgba(78,188,93,.55);
+}
+.mission-complete-pop{
+  position:fixed;
+  inset:0;
+  z-index:250;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(11,31,55,.48);
+  backdrop-filter:blur(5px);
+  animation:missionFadeIn .25s ease both;
+}
+.mission-complete-card{
+  width:min(90vw,420px);
+  background:#fff4cf;
+  border:6px solid #14375d;
+  border-radius:30px;
+  padding:26px 22px;
+  text-align:center;
+  color:#14375d;
+  box-shadow:0 16px 0 #0b5a9a,0 28px 46px rgba(0,0,0,.32);
+  animation:missionPop .45s cubic-bezier(.18,1.45,.38,1) both;
+}
+.mission-complete-card img{
+  width:min(58vw,230px);
+  display:block;
+  margin:0 auto 12px;
+  filter:drop-shadow(0 14px 14px rgba(0,0,0,.2));
+}
+.mission-complete-card h3{
+  font-size:32px;
+  color:#df1e2b;
+  text-shadow:2px 2px 0 white;
+  margin-bottom:6px;
+}
+.mission-complete-card p{
+  font-size:16px;
+  line-height:1.5;
+}
+.mission-ok-btn{
+  margin-top:16px;
+  background:#df1e2b;
+  color:#fff;
+  padding:11px 22px;
+  border-radius:999px;
+  box-shadow:0 6px 0 #9d1017;
+}
+.cake-fly{
+  position:fixed;
+  z-index:240;
+  pointer-events:none;
+  width:var(--size,90px);
+  left:var(--x,50vw);
+  top:110vh;
+  animation:cakeFly var(--dur,4.5s) ease-in-out forwards;
+  animation-delay:var(--delay,0s);
+  filter:drop-shadow(0 14px 10px rgba(0,0,0,.22));
+}
+@keyframes missionFadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes missionPop{
+  from{opacity:0;transform:translateY(18px) scale(.86) rotate(-2deg)}
+  to{opacity:1;transform:translateY(0) scale(1) rotate(0)}
+}
+@keyframes cakeFly{
+  0%{
+    opacity:0;
+    transform:translate3d(0,0,0) rotate(0deg) scale(.8);
+  }
+  12%{opacity:1}
+  55%{
+    opacity:1;
+    transform:translate3d(var(--dx,40px), -62vh, 0) rotate(var(--rot,25deg)) scale(1);
+  }
+  100%{
+    opacity:0;
+    transform:translate3d(calc(var(--dx,40px) * 1.6), -122vh, 0) rotate(calc(var(--rot,25deg) * 2)) scale(.75);
+  }
+}
+
+
+/* === PATCH FINAL: FOTO SLOT MUDAH DIGANTI + KUCING TRANSPARAN === */
+.photo-slot{
+  overflow:hidden !important;
+  position:relative !important;
+  padding:0 !important;
+  background:#fff7df !important;
+}
+.photo-slot img{
+  width:100% !important;
+  height:100% !important;
+  min-height:130px !important;
+  display:block !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+.photo-slot .photo-label{
+  position:absolute;
+  left:10px;
+  right:10px;
+  bottom:10px;
+  background:rgba(255,247,223,.88);
+  border:2px solid rgba(20,55,93,.25);
+  border-radius:14px;
+  padding:6px 8px;
+  font-size:12px;
+  color:#14375d;
+  backdrop-filter:blur(6px);
+}
+.photo-slot .empty-slot{
+  width:100%;
+  min-height:130px;
+  display:grid;
+  place-items:center;
+  padding:16px;
+  text-align:center;
+}
+.cake-fly,
+.mission-complete-card img{
+  background:transparent !important;
+}
+
+</style>
+</head>
+<body>
+<audio id="bgMusic" src="" preload="auto" loop></audio>
+
+<section class="screen active" id="opening">
+  <div class="cloud cl1"></div>
+  <div class="cloud cl2"></div>
+  <div class="cloud cl3"></div>
+  <div class="checker-floor"></div>
+
+  <div class="opening-stage">
+    <img class="opening-toy ball" src="ball.png" alt="" onerror="this.style.display='none'">
+    <img class="opening-toy rocket" src="rocket.png" alt="" onerror="this.style.display='none'">
+    <img class="opening-toy forky" src="forky.png" alt="" onerror="this.style.display='none'">
+
+    <button class="gift-box" id="openGift" aria-label="Open gift">
+      <div class="lid"></div>
+      <div class="ribbon-v"></div>
+      <div class="ribbon-h"></div>
+      <div class="box-body">
+        <div class="label"><span>to: birthday buddy</span><b>Open Me!</b></div>
+      </div>
+    </button>
+
+    <h1 class="opening-title">Birthday Gift Box</h1>
+    <p class="opening-sub">tap kotaknya buat buka kado digital</p>
+  </div>
+</section>
+
+<main class="screen" id="main">
+  <div class="room-bg">
+    <div class="wall-cloud wc1"></div>
+    <div class="wall-cloud wc2"></div>
+    <div class="floor"></div>
+  </div>
+
+  <header class="hero">
+    <p class="tag">special birthday package</p>
+    <h1>Happy Birthday, Buddy!</h1>
+  </header>
+
+  <section class="toy-table">
+    <button class="toy toy-cowboy" data-card="letter"><img src="cowboy.png" alt="" onerror="this.outerHTML='<span>🤠</span>'"></button>
+    <button class="toy toy-horse" data-card="mission"><img src="horse.png" alt="" onerror="this.outerHTML='<span>🐴</span>'"></button>
+    <button class="toy toy-doll" data-card="gallery"><img src="doll.png" alt="" onerror="this.outerHTML='<span>🎀</span>'"></button>
+    <button class="toy toy-rocket" data-card="rocket"><img src="rocket.png" alt="" onerror="this.outerHTML='<span>🚀</span>'"></button>
+    <button class="toy toy-forky" data-card="game"><img src="forky.png" alt="" onerror="this.outerHTML='<span>🍴</span>'"></button>
+
+    <div class="main-card">
+      <span class="badge">gift card</span>
+      <h2>Choose Your Surprise</h2>
+      <p>Pencet mainan atau card di bawah buat buka isi kadonya.</p>
+    </div>
+  </section>
+
+  <section class="menu-row">
+    <button class="menu-card" data-card="letter"><span>💌</span><div><b>Birthday Letter</b></div></button>
+    <button class="menu-card" data-card="mission"><span>⭐</span><div><b>Mission Card</b></div></button>
+    <button class="menu-card" data-card="gallery"><span>📸</span><div><b>Memory Slots</b></div></button>
+    <button class="menu-card" data-card="music"><span>🎵</span><div><b>Playlist Gift</b></div></button>
+  </section>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-bg"></div>
+  <article class="popup">
+    <button class="back-btn" id="closeModal">← back</button>
+    <div id="modalContent"></div>
+  </article>
+</div>
+
+<script>
+const opening = document.getElementById("opening");
+const main = document.getElementById("main");
+const openGift = document.getElementById("openGift");
+const modal = document.getElementById("modal");
+const modalContent = document.getElementById("modalContent");
+const closeModalBtn = document.getElementById("closeModal");
+const bgMusic = document.getElementById("bgMusic");
+let musicStarted=false, score=0, gameTimer=null;
+
+function startMusic(){
+  if(!bgMusic || musicStarted) return;
+  bgMusic.volume=.42;
+  bgMusic.play().then(()=>musicStarted=true).catch(()=>{});
+}
+function showMain(){
+  openGift.classList.add("open");
+  startMusic();
+  makeConfetti();
+  setTimeout(()=>{
+    opening.classList.remove("active");
+    main.classList.add("active");
+    makeConfetti();
+  },900);
+}
+openGift.addEventListener("click",showMain);
+["click","touchstart","pointerdown"].forEach(evt=>window.addEventListener(evt,startMusic,{passive:true}));
+
+const FOTO_SLOT_1 = "photo 1.jpg";
+const FOTO_SLOT_2 = "photo 2.jpg";
+const FOTO_SLOT_3 = "photo 3.jpg";
+
+const cardData={
+  letter:{
+    title:"Birthday Letter",
+    sub:"surat kecil dari gift box",
+    html:`<div class="wish-paper">Happy birthday yaa! Semoga hari ini rasanya kayak buka kotak mainan baru: seru, hangat, dan bikin senyum sendiri. Semoga umur baru ini bawa banyak hal baik, teman yang tulus, rezeki yang lancar, dan mimpi yang pelan-pelan jadi nyata.<br><br>Tetap jadi kamu yang seru, kuat, dan punya cara sendiri buat bikin hari biasa jadi lebih hidup. Enjoy your day, buddy! ✦</div>`
+  },
+  mission:{
+    title:"Birthday Mission",
+    sub:"misi kecil yang wajib diselesaikan hari ini",
+    html:`<div class="mission-list">
+      <div class="mission-item"><span class="check">✓</span><span class="mission-text">Senyum minimal 5 kali hari ini</span></div>
+      <div class="mission-item"><span class="check">✓</span><span class="mission-text">Makan sesuatu yang kamu suka</span></div>
+      <div class="mission-item"><span class="check">✓</span> Berdo'a dan berjanji dengan diri sendiri agar lebih baik!</div>
+      <div class="mission-item"><span class="check">✓</span><span class="mission-text">Ingat kalau kamu berharga</span></div>
+      <div class="mission-item"><span class="check">✓</span><span class="mission-text">Buka semua surprise di web ini</span></div>
+    </div>`
+  },
+  gallery:{
+    title:"Memory Slots",
+    sub:"momen-momen ini yang akan selalu terkenang",
+    html:`<div class="gallery-grid">
+      <div class="photo-slot">
+        <img src="${FOTO_SLOT_1}" alt="Foto 1" onerror="this.outerHTML='<div class=&quot;empty-slot&quot;>PHOTO 01<br></div>'">
+        <div class="photo-label">best moment</div>
+      </div>
+      <div class="photo-slot">
+        <img src="${FOTO_SLOT_2}" alt="Foto 2" onerror="this.outerHTML='<div class=&quot;empty-slot&quot;>PHOTO 02<br></small></div>'">
+        <div class="photo-label">funny archive</div>
+      </div>
+      <div class="photo-slot">
+        <img src="${FOTO_SLOT_3}" alt="Foto 3" onerror="this.outerHTML='<div class=&quot;empty-slot&quot;>PHOTO 03<br></div>'">
+        <div class="photo-label">birthday memory</div>
+      </div>
+    </div>`
+  },
+  rocket:{
+    title:"Rocket Wish",
+    sub:"harapan kecil yang diterbangkan ke langit",
+    html:`<div class="rocket-scene">
+      <div class="fire"></div>
+      <div class="launch-rocket"><img src="rocket.png" alt="" onerror="this.outerHTML='<div style=&quot;font-size:90px;text-align:center;&quot;>🚀</div>'"></div>
+    </div><p class="popup-sub" style="margin-top:18px">Semoga semua hal yang kamu perjuangkan membuahkan hasil yang terbaik.</p>`
+  },
+  music:{
+    title:"Playlist Gift",
+    html:`<div class="music-box">
+      <div class="record"></div>
+      <div style="flex:1;color:#14375d"><h3>Birthday Track</h3><p>Lagu favorit kamuu.</p><audio src="music.mp3" controls></audio></div>
+    </div>`
+  },
+  game:{
+    title:"Catch the Stars",
+    sub:"klik bintang jatuh buat nambah skor",
+    html:`<div class="game-info">Score: <b id="scoreText">0</b></div><div class="game-area" id="gameArea"></div>`
+  }
+};
+
+function openCard(type){
+  const data=cardData[type]; if(!data) return;
+  if(type==="music" && bgMusic && !bgMusic.paused) bgMusic.pause();
+  modalContent.innerHTML=`<div class="popup-inner"><h2 class="popup-title">${data.title}</h2><p class="popup-sub">${data.sub}</p>${data.html}</div>`;
+  modal.classList.add("active");
+  if(type==="game") startGame();
+  if(type==="mission") setupMissionChecklist();
+}
+function closePopup(){
+  modal.classList.remove("active");
+  clearInterval(gameTimer); gameTimer=null; score=0;
+  modalContent.querySelectorAll("audio").forEach(a=>a.pause());
+  if(bgMusic && musicStarted) bgMusic.play().catch(()=>{});
+  setTimeout(()=>modalContent.innerHTML="",260);
+}
+document.querySelectorAll("[data-card]").forEach(btn=>btn.addEventListener("click",()=>{startMusic();openCard(btn.dataset.card)}));
+closeModalBtn.addEventListener("click",closePopup);
+modal.addEventListener("click",e=>{if(e.target.classList.contains("modal-bg")) closePopup()});
+
+function makeConfetti(){
+  const items=["⭐","🎁","🚀","🤠","💙","💛","❤️"];
+  for(let i=0;i<44;i++){
+    const c=document.createElement("div");
+    c.className="confetti"; c.textContent=items[Math.floor(Math.random()*items.length)];
+    c.style.left=Math.random()*100+"vw"; c.style.animationDelay=Math.random()*.8+"s";
+    c.style.fontSize=(16+Math.random()*16)+"px";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3600);
+  }
+}
+function startGame(){
+  const gameArea=document.getElementById("gameArea"), scoreText=document.getElementById("scoreText");
+  if(!gameArea||!scoreText) return;
+  score=0; scoreText.textContent=score; clearInterval(gameTimer);
+  gameTimer=setInterval(()=>{
+    const star=document.createElement("button");
+    star.className="catch-star"; star.textContent="⭐"; star.style.left=Math.random()*88+"%";
+    star.addEventListener("click",()=>{score++; scoreText.textContent=score; star.textContent="✨"; star.style.pointerEvents="none"; setTimeout(()=>star.remove(),180)});
+    gameArea.appendChild(star); setTimeout(()=>star.remove(),2600);
+  },620);
+}
+
+/* === FINAL PATCH: CHECKLIST BISA DICENTANG + POPUP CAKE === */
+function setupMissionChecklist(){
+  const items = Array.from(modalContent.querySelectorAll(".mission-item"));
+  if(!items.length) return;
+
+  items.forEach(item=>{
+    item.classList.remove("done");
+    item.addEventListener("click", ()=>{
+      item.classList.toggle("done");
+      const allDone = items.every(i => i.classList.contains("done"));
+      if(allDone && !document.querySelector(".mission-complete-pop")){
+        showMissionComplete();
+      }
+    });
+  });
+}
+
+function showMissionComplete(){
+  makeCakeConfetti();
+
+  const pop = document.createElement("div");
+  pop.className = "mission-complete-pop";
+  pop.innerHTML = `
+    <div class="mission-complete-card">
+      <img src="cake-transparent.png" alt="Birthday cake cat" onerror="this.style.display='none'">
+      <h3>Mission Complete!</h3>
+      <p>Semua birthday mission udah selesai. Hari ini resmi jadi hari yang lebih seru 🎁</p>
+      <button class="mission-ok-btn" type="button">Yeay!</button>
+    </div>
+  `;
+
+  document.body.appendChild(pop);
+
+  pop.querySelector(".mission-ok-btn").addEventListener("click", ()=>{
+    pop.remove();
+  });
+
+  setTimeout(()=>{
+    if(pop.isConnected) pop.remove();
+  }, 4200);
+}
+
+function makeCakeConfetti(){
+  makeConfetti();
+
+  for(let i=0;i<18;i++){
+    const img = document.createElement("img");
+    img.className = "cake-fly";
+    img.src = "cake-transparent.png";
+    img.alt = "";
+    img.style.setProperty("--x", (Math.random()*92 + 2) + "vw");
+    img.style.setProperty("--dx", ((Math.random() - .5) * 180) + "px");
+    img.style.setProperty("--rot", ((Math.random() - .5) * 90) + "deg");
+    img.style.setProperty("--size", (52 + Math.random()*72) + "px");
+    img.style.setProperty("--dur", (3.4 + Math.random()*1.7) + "s");
+    img.style.setProperty("--delay", (Math.random()*.75) + "s");
+    document.body.appendChild(img);
+    setTimeout(()=>img.remove(), 6200);
+  }
+}
+
+</script>
+</body>
+</html>
